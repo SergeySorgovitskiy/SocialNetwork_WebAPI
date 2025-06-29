@@ -5,6 +5,20 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Auth\Commands\" />
+    <Folder Include="Features\Auth\Queries\" />
+    <Folder Include="Features\Auth\DTOs\" />
+    <Folder Include="Features\Posts\" />
+    <Folder Include="Features\Users\" />
+    <Folder Include="Features\Social\" />
+    <Folder Include="Interfaces\Services\" />
+    <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="Mappings\" />
+    <Folder Include="Services\" />
+    <Folder Include="Common\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

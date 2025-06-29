@@ -197,9 +197,9 @@
               "target": "Package",
               "version": "[9.0.6, )"
             },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[9.0.4, )"
+              "version": "[9.0.6, )"
             }
           },
           "imports": [
@@ -252,6 +252,9 @@
             "projectReferences": {
               "C:\\Projects\\PracticeProject_Modsen\\Application\\Application.csproj": {
                 "projectPath": "C:\\Projects\\PracticeProject_Modsen\\Application\\Application.csproj"
+              },
+              "C:\\Projects\\PracticeProject_Modsen\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Projects\\PracticeProject_Modsen\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -281,6 +284,12 @@
               "version": "[9.0.6, )"
             },
             "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.6, )"
             },
