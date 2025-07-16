@@ -1,11 +1,13 @@
 using Application.Common.DTOs;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
@@ -16,11 +18,11 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers(CancellationToken cancellationToken)
         {
             try
             {
-                var users = await _userService.GetAllUsersAsync();
+                var users = await _userService.GetAllUsersAsync(cancellationToken);
                 return Ok(users);
             }
             catch (Exception ex)
@@ -30,11 +32,11 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUserById(Guid id)
+        public async Task<ActionResult<UserDto>> GetUserById(Guid id, CancellationToken cancellationToken)
         {
             try
             {
-                var user = await _userService.GetUserByIdAsync(id);
+                var user = await _userService.GetUserByIdAsync(id, cancellationToken);
                 if (user == null)
                 {
                     return NotFound(new { message = "Пользователь не найден" });
@@ -48,16 +50,16 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto createUserDto)
+        public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto createUserDto, CancellationToken cancellationToken)
         {
             try
             {
-                if (string.IsNullOrEmpty(createUserDto.Username) || string.IsNullOrEmpty(createUserDto.Email) || string.IsNullOrEmpty(createUserDto.Password))
+                if (string.IsNullOrEmpty(createUserDto.UserName) || string.IsNullOrEmpty(createUserDto.Email) || string.IsNullOrEmpty(createUserDto.Password))
                 {
-                    return BadRequest(new { message = "Username, Email и Password обязательны" });
+                    return BadRequest(new { message = "UserName, Email и Password обязательны" });
                 }
 
-                var user = await _userService.CreateUserAsync(createUserDto);
+                var user = await _userService.CreateUserAsync(createUserDto, cancellationToken);
                 return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
             }
             catch (InvalidOperationException ex)
@@ -71,11 +73,15 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<UserDto>> UpdateUser(Guid id, UpdateUserDto updateUserDto)
+        public async Task<ActionResult<UserDto>> UpdateUser(Guid id, UpdateUserDto updateUserDto, CancellationToken cancellationToken)
         {
             try
             {
-                var user = await _userService.UpdateUserAsync(id, updateUserDto);
+                var user = await _userService.UpdateUserAsync(id, updateUserDto, cancellationToken);
+                if (user == null)
+                {
+                    return NotFound(new { message = "Пользователь не найден" });
+                }
                 return Ok(user);
             }
             catch (InvalidOperationException ex)
@@ -89,11 +95,15 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(Guid id)
+        public async Task<ActionResult> DeleteUser(Guid id, CancellationToken cancellationToken)
         {
             try
             {
-                await _userService.DeleteUserAsync(id);
+                var result = await _userService.DeleteUserAsync(id, cancellationToken);
+                if (!result)
+                {
+                    return NotFound(new { message = "Пользователь не найден" });
+                }
                 return NoContent();
             }
             catch (Exception ex)

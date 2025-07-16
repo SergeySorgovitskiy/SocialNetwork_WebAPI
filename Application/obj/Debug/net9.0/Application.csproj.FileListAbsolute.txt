@@ -16,3 +16,5 @@ C:\Projects\PracticeProject_Modsen\Application\obj\Debug\net9.0\Application.dll
 C:\Projects\PracticeProject_Modsen\Application\obj\Debug\net9.0\refint\Application.dll
 C:\Projects\PracticeProject_Modsen\Application\obj\Debug\net9.0\Application.pdb
 C:\Projects\PracticeProject_Modsen\Application\obj\Debug\net9.0\ref\Application.dll
+C:\Projects\PracticeProject_Modsen\Application\bin\Debug\net9.0\Application.runtimeconfig.json
+C:\Projects\PracticeProject_Modsen\Application\obj\Debug\net9.0\Application.genruntimeconfig.cache

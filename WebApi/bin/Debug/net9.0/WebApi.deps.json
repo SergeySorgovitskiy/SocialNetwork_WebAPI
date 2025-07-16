@@ -14,7 +14,9 @@
           "Microsoft.AspNetCore.OpenApi": "9.0.6",
           "Microsoft.EntityFrameworkCore": "9.0.6",
           "Microsoft.EntityFrameworkCore.Design": "9.0.6",
-          "Swashbuckle.AspNetCore": "9.0.1"
+          "Microsoft.EntityFrameworkCore.Tools": "9.0.6",
+          "Swashbuckle.AspNetCore": "9.0.1",
+          "System.IdentityModel.Tokens.Jwt": "8.0.1"
         },
         "runtime": {
           "WebApi.dll": {}
@@ -517,6 +519,11 @@
             "assemblyVersion": "9.0.6.0",
             "fileVersion": "9.0.625.26607"
           }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools/9.0.6": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "9.0.6"
         }
       },
       "Microsoft.Extensions.ApiDescription.Server/8.0.0": {},
@@ -1233,6 +1240,13 @@
       "sha512": "sha512-hr8vJSL1KXkXdgvNYY5peSygSZkoKQ+r6umXGMLoggBQ9NMbf0jo8p13Hy0biON2IS03ixOl0g4Mgw0hjgTksw==",
       "path": "microsoft.entityframeworkcore.sqlserver/9.0.6",
       "hashPath": "microsoft.entityframeworkcore.sqlserver.9.0.6.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Tools/9.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2Qs+OnYPOrfb5wpSXNGdm9v3QattLhou26xamaICIE9jqWAW7xdzDlY/yXRz6zKFLnzRH70IM+XXYVElEVeQ9Q==",
+      "path": "microsoft.entityframeworkcore.tools/9.0.6",
+      "hashPath": "microsoft.entityframeworkcore.tools.9.0.6.nupkg.sha512"
     },
     "Microsoft.Extensions.ApiDescription.Server/8.0.0": {
       "type": "package",

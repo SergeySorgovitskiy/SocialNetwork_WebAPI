@@ -15,27 +15,27 @@ namespace Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
+        public async Task<IEnumerable<PostDto>> GetAllPostsAsync(CancellationToken cancellationToken)
         {
-            var posts = await _postRepository.GetAllAsync();
+            var posts = await _postRepository.GetAllAsync(cancellationToken);
             return posts.Select(MapToDto);
         }
 
-        public async Task<PostDto?> GetPostByIdAsync(Guid id)
+        public async Task<PostDto?> GetPostByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var post = await _postRepository.GetByIdAsync(id);
+            var post = await _postRepository.GetByIdAsync(id, cancellationToken);
             return post != null ? MapToDto(post) : null;
         }
 
-        public async Task<IEnumerable<PostDto>> GetPostsByAuthorIdAsync(Guid authorId)
+        public async Task<IEnumerable<PostDto>> GetPostsByAuthorIdAsync(Guid authorId, CancellationToken cancellationToken)
         {
-            var posts = await _postRepository.GetByAuthorIdAsync(authorId);
+            var posts = await _postRepository.GetByAuthorIdAsync(authorId, cancellationToken);
             return posts.Select(MapToDto);
         }
 
-        public async Task<PostDto> CreatePostAsync(Guid authorId, CreatePostDto createPostDto)
+        public async Task<PostDto> CreatePostAsync(Guid authorId, CreatePostDto createPostDto, CancellationToken cancellationToken)
         {
-            var author = await _userRepository.GetByIdAsync(authorId);
+            var author = await _userRepository.GetByIdAsync(authorId, cancellationToken);
             if (author == null)
             {
                 throw new InvalidOperationException("Пользователь не найден");
@@ -48,18 +48,18 @@ namespace Application.Services
                 Id = Guid.NewGuid(),
                 Content = createPostDto.Content,
                 AuthorId = authorId,
-                MediaUrls = createPostDto.MediaUrls,
+                MediaUrls = createPostDto.MediaUrls ?? new HashSet<string>(),
                 Hashtags = hashtags,
                 CreatedAt = DateTime.UtcNow
             };
 
-            var createdPost = await _postRepository.CreateAsync(post);
+            var createdPost = await _postRepository.CreateAsync(post, cancellationToken);
             return MapToDto(createdPost);
         }
 
-        public async Task<PostDto> UpdatePostAsync(Guid id, Guid authorId, UpdatePostDto updatePostDto)
+        public async Task<PostDto> UpdatePostAsync(Guid id, Guid authorId, UpdatePostDto updatePostDto, CancellationToken cancellationToken)
         {
-            var post = await _postRepository.GetByIdAsync(id);
+            var post = await _postRepository.GetByIdAsync(id, cancellationToken);
             if (post == null)
             {
                 throw new InvalidOperationException("Пост не найден");
@@ -71,17 +71,17 @@ namespace Application.Services
             }
 
             post.Content = updatePostDto.Content;
-            post.MediaUrls = updatePostDto.MediaUrls;
+            post.MediaUrls = updatePostDto.MediaUrls ?? new HashSet<string>();
             post.Hashtags = ExtractHashtags(updatePostDto.Content);
             post.UpdatedAt = DateTime.UtcNow;
 
-            var updatedPost = await _postRepository.UpdateAsync(post);
+            var updatedPost = await _postRepository.UpdateAsync(post, cancellationToken);
             return MapToDto(updatedPost);
         }
 
-        public async Task DeletePostAsync(Guid id, Guid authorId)
+        public async Task DeletePostAsync(Guid id, Guid authorId, CancellationToken cancellationToken)
         {
-            var post = await _postRepository.GetByIdAsync(id);
+            var post = await _postRepository.GetByIdAsync(id, cancellationToken);
             if (post == null)
             {
                 throw new InvalidOperationException("Пост не найден");
@@ -92,7 +92,7 @@ namespace Application.Services
                 throw new InvalidOperationException("Вы не можете удалить чужой пост");
             }
 
-            await _postRepository.DeleteAsync(id);
+            await _postRepository.DeleteAsync(id, cancellationToken);
         }
 
         private static PostDto MapToDto(Post post)
@@ -102,19 +102,18 @@ namespace Application.Services
                 Id = post.Id,
                 Content = post.Content,
                 AuthorId = post.AuthorId,
-                AuthorUsername = post.Author?.Username ?? "Неизвестный пользователь",
-                MediaUrls = post.MediaUrls,
-                Hashtags = post.Hashtags,
-                LikeCount = post.LikeCount,
+                AuthorUserName = post.Author?.UserName ?? "Неизвестный пользователь",
+                MediaUrls = post.MediaUrls ?? new HashSet<string>(),
+                Hashtags = post.Hashtags ?? new HashSet<string>(),
                 RepostCount = post.RepostCount,
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt
             };
         }
 
-        private static string? ExtractHashtags(string content)
+        private static ICollection<string> ExtractHashtags(string content)
         {
-            var hashtags = new List<string>();
+            var hashtags = new HashSet<string>();
             var words = content.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var word in words)
@@ -125,7 +124,7 @@ namespace Application.Services
                 }
             }
 
-            return hashtags.Count > 0 ? string.Join(",", hashtags) : null;
+            return hashtags;
         }
     }
 }

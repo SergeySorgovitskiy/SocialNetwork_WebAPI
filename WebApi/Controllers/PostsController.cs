@@ -1,11 +1,13 @@
 using Application.Common.DTOs;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class PostsController : ControllerBase
     {
         private readonly PostService _postService;
@@ -16,11 +18,11 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PostDto>>> GetAllPosts()
+        public async Task<ActionResult<IEnumerable<PostDto>>> GetAllPosts(CancellationToken cancellationToken)
         {
             try
             {
-                var posts = await _postService.GetAllPostsAsync();
+                var posts = await _postService.GetAllPostsAsync(cancellationToken);
                 return Ok(posts);
             }
             catch (Exception ex)
@@ -30,11 +32,11 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PostDto>> GetPostById(Guid id)
+        public async Task<ActionResult<PostDto>> GetPostById(Guid id, CancellationToken cancellationToken)
         {
             try
             {
-                var post = await _postService.GetPostByIdAsync(id);
+                var post = await _postService.GetPostByIdAsync(id, cancellationToken);
                 if (post == null)
                 {
                     return NotFound(new { message = "Пост не найден" });
@@ -48,11 +50,11 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("user/{authorId}")]
-        public async Task<ActionResult<IEnumerable<PostDto>>> GetPostsByAuthor(Guid authorId)
+        public async Task<ActionResult<IEnumerable<PostDto>>> GetPostsByAuthor(Guid authorId, CancellationToken cancellationToken)
         {
             try
             {
-                var posts = await _postService.GetPostsByAuthorIdAsync(authorId);
+                var posts = await _postService.GetPostsByAuthorIdAsync(authorId, cancellationToken);
                 return Ok(posts);
             }
             catch (Exception ex)
@@ -62,7 +64,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<PostDto>> CreatePost([FromBody] CreatePostDto createPostDto, [FromQuery] Guid authorId)
+        public async Task<ActionResult<PostDto>> CreatePost([FromBody] CreatePostDto createPostDto, [FromQuery] Guid authorId, CancellationToken cancellationToken)
         {
             try
             {
@@ -76,7 +78,7 @@ namespace WebApi.Controllers
                     return BadRequest(new { message = "Контент поста не может превышать 280 символов" });
                 }
 
-                var post = await _postService.CreatePostAsync(authorId, createPostDto);
+                var post = await _postService.CreatePostAsync(authorId, createPostDto, cancellationToken);
                 return CreatedAtAction(nameof(GetPostById), new { id = post.Id }, post);
             }
             catch (InvalidOperationException ex)
@@ -90,7 +92,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<PostDto>> UpdatePost(Guid id, [FromBody] UpdatePostDto updatePostDto, [FromQuery] Guid authorId)
+        public async Task<ActionResult<PostDto>> UpdatePost(Guid id, [FromBody] UpdatePostDto updatePostDto, [FromQuery] Guid authorId, CancellationToken cancellationToken)
         {
             try
             {
@@ -104,7 +106,7 @@ namespace WebApi.Controllers
                     return BadRequest(new { message = "Контент поста не может превышать 280 символов" });
                 }
 
-                var post = await _postService.UpdatePostAsync(id, authorId, updatePostDto);
+                var post = await _postService.UpdatePostAsync(id, authorId, updatePostDto, cancellationToken);
                 return Ok(post);
             }
             catch (InvalidOperationException ex)
@@ -118,11 +120,11 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeletePost(Guid id, [FromQuery] Guid authorId)
+        public async Task<ActionResult> DeletePost(Guid id, [FromQuery] Guid authorId, CancellationToken cancellationToken)
         {
             try
             {
-                await _postService.DeletePostAsync(id, authorId);
+                await _postService.DeletePostAsync(id, authorId, cancellationToken);
                 return NoContent();
             }
             catch (InvalidOperationException ex)

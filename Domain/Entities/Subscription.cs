@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using Domain.Enums;
 namespace Domain.Entities
 {
     public class Subscription
@@ -7,11 +7,10 @@ namespace Domain.Entities
         public Guid Id { get; set; }
         public Guid FollowerId { get; set; }
         public Guid FollowingId { get; set; }
-        [Required]
-        [StringLength(20)]
-        public string Status { get; set; } = "approved"; 
+        public SubscriptionStatus Status { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public virtual User Follower { get; set; } = null!;
-        public virtual User Following { get; set; } = null!;
+        public virtual User Follower { get; set; }
+        public virtual User Following { get; set; }
     }
+    
 }

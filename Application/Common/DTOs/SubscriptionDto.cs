@@ -4,10 +4,10 @@ namespace Application.Common.DTOs
     {
         public Guid Id { get; set; }
         public Guid FollowerId { get; set; }
-        public string FollowerUsername { get; set; } = string.Empty;
+        public required string FollowerUserName { get; set; }
         public Guid FollowingId { get; set; }
-        public string FollowingUsername { get; set; } = string.Empty;
-        public string Status { get; set; } = string.Empty;
+        public required string FollowingUserName { get; set; }
+        public required string Status { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 
@@ -19,6 +19,6 @@ namespace Application.Common.DTOs
 
     public class UpdateSubscriptionDto
     {
-        public string Status { get; set; } = string.Empty;
+        public required string Status { get; set; }
     }
 }
