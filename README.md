@@ -1,41 +1,34 @@
 # SocialNetwork
 
-<div align="center">
-  <img src="https://img.shields.io/badge/.NET-9.0-512BD4?style=for-the-badge&logo=.net&logoColor=white" alt=".NET 9.0" />
-  <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#" />
-  <img src="https://img.shields.io/badge/Entity%20Framework-512BD4?style=for-the-badge&logo=.net&logoColor=white" alt="Entity Framework" />
-  <img src="https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white" alt="SQL Server" />
-  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white" alt="JWT" />
-</div>
 
-## 📋 Project Description
+##  Project Description
 
 SocialNetwork is a modern RESTful API for a social media platform built with .NET 9 using Clean Architecture principles. The application provides comprehensive social networking features including user authentication, content sharing, social interactions, and real-time communication capabilities.
 
-## ✨ Features
+##  Features
 
-### 🔐 Authentication & Authorization
+### Authentication & Authorization
 
 - **JWT-based authentication** with secure token management
 - **User registration and login** with email validation
 - **Role-based access control** for different user permissions
 - **Refresh token mechanism** for enhanced security
 
-### 👥 User Management
+### User Management
 
 - **User profiles** with customizable avatars and bios
 - **Privacy settings** (public/private profiles)
 - **User search and discovery** functionality
 - **Profile customization** with bio and avatar support
 
-### 📝 Content Management
+### Content Management
 
 - **Post creation and editing** with rich text support
 - **Media upload support** for images and videos
 - **Hashtag system** for content categorization
 - **Content moderation** and filtering capabilities
 
-### 🤝 Social Interactions
+###  Social Interactions
 
 - **Like/Unlike posts** with real-time counters
 - **Comment system** with threaded discussions
@@ -43,7 +36,7 @@ SocialNetwork is a modern RESTful API for a social media platform built with .NE
 - **Bookmark posts** for later reading
 - **Follow/Unfollow users** with subscription management
 
-### 📰 News Feed
+###  News Feed
 
 - **Personalized feed** based on user subscriptions
 - **Content filtering** by various criteria
@@ -75,13 +68,6 @@ SocialNetwork is a modern RESTful API for a social media platform built with .NE
 - **Dependency Injection** - IoC container for service management
 - **CQRS Pattern** - Command Query Responsibility Segregation
 - **Unit of Work Pattern** - Transaction management
-
-### Development Tools
-
-- **Visual Studio 2022** - Primary IDE
-- **Git** - Version control
-- **Swagger UI** - API testing and documentation
-- **Entity Framework Tools** - Database migrations and management
 
 ## 🏛️ Architecture Overview
 
@@ -138,15 +124,6 @@ SocialNetwork/
     └── IntegrationTests/ # Integration tests
 ```
 
-## 🚀 How to Run
-
-### Prerequisites
-
-- **Visual Studio 2022** or **Visual Studio Code**
-- **.NET 9.0 SDK**
-- **SQL Server** (LocalDB, Express, or Developer Edition)
-- **Git** for version control
-
 ### Setup Instructions
 
 1. **Clone the repository**
@@ -197,7 +174,7 @@ Update `WebApi/appsettings.json` with your settings:
 }
 ```
 
-## 📚 API Documentation
+## API Documentation
 
 The API is fully documented using Swagger/OpenAPI. Once the application is running, visit:
 
@@ -213,7 +190,7 @@ The API is fully documented using Swagger/OpenAPI. Once the application is runni
   - `POST /api/users/{id}/follow` - Follow user
   - `GET /api/newsfeed` - Get personalized feed
 
-## 🧪 Testing
+## Testing
 
 ### Unit Tests
 
@@ -227,17 +204,6 @@ dotnet test tests/UnitTests/
 dotnet test tests/IntegrationTests/
 ```
 
-## 🔧 Development
-
-### Adding New Features
-
-1. Create domain entities in `Domain/Entities/`
-2. Define repository interfaces in `Domain/Interfaces/`
-3. Implement business logic in `Application/Services/`
-4. Add repository implementations in `Infrastructure/Repositories/`
-5. Create API controllers in `WebApi/Controllers/`
-6. Add corresponding tests
-
 ### Database Migrations
 
 ```bash
@@ -248,26 +214,7 @@ dotnet ef migrations add MigrationName --project Infrastructure --startup-projec
 dotnet ef database update --project Infrastructure --startup-project WebApi
 ```
 
-## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Author
-
-**Your Name**
-
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-
----
 
 <div align="center">
   <p>Made with ❤️ using .NET 9 and Clean Architecture</p>
