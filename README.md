@@ -215,9 +215,3 @@ dotnet ef database update --project Infrastructure --startup-project WebApi
 ```
 
 
-
-<div align="center">
-  <p>Made with ❤️ using .NET 9 and Clean Architecture</p>
-  <p>⭐ Star this repository if you found it helpful!</p>
-</div>
->>>>>>> master
