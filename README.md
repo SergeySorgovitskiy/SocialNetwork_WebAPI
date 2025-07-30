@@ -43,14 +43,14 @@ SocialNetwork is a modern RESTful API for a social media platform built with .NE
 - **Real-time updates** for new posts and interactions
 - **Trending content** discovery
 
-### 🔍 Advanced Features
+### Advanced Features
 
 - **Search functionality** across users and posts
 - **Notification system** for social interactions
 - **Content analytics** and engagement metrics
 - **API rate limiting** and security measures
 
-## 🏗️ Technology Stack
+##  Technology Stack
 
 ### Backend
 
@@ -69,7 +69,7 @@ SocialNetwork is a modern RESTful API for a social media platform built with .NE
 - **CQRS Pattern** - Command Query Responsibility Segregation
 - **Unit of Work Pattern** - Transaction management
 
-## 🏛️ Architecture Overview
+## Architecture Overview
 
 ### Domain Layer
 
@@ -99,7 +99,7 @@ SocialNetwork is a modern RESTful API for a social media platform built with .NE
 - **Configuration**: Application settings and startup
 - **Authentication**: JWT token handling
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 SocialNetwork/
